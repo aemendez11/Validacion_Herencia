@@ -1,0 +1,105 @@
+﻿@page "/catedratico-crear"
+@inject HttpClient http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+<h3>Profesor</h3>
+
+<EditForm Model="@catedratico" OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="Nombre">Ingrese Nombre:</label>
+        <InputText id="Nombre" @bind-Value="catedratico.Nombre" class="form-control" />
+        <ValidationMessage For="() => catedratico.Nombre" />
+    </div>
+    <div class="form-group">
+        <label for="Apellido">Ingrese Apellido:</label>
+        <InputText id="Apellido" @bind-Value="catedratico.Apellido" class="form-control" />
+        <ValidationMessage For="() => catedratico.Apellido" />
+    </div>
+    <div class="form-group">
+        <label for="Direccion">Ingrese Direccion:</label>
+        <InputText id="Direccion" @bind-Value="catedratico.Direccion" class="form-control" />
+        <ValidationMessage For="() => catedratico.Direccion" />
+    </div>
+    <div class="form-group">
+        <label for="FechaNac">Ingrese Fecha:</label>
+        <InputDate id="FechaNac" @bind-Value="catedratico.FechaNac" class="form-control" />
+        <ValidationMessage For="() => catedratico.FechaNac" />
+    </div>
+    <div class="form-group">
+        <label for="Titulo">Ingrese Titulo:</label>
+        <InputText id="Titulo" @bind-Value="catedratico.Titulo" class="form-control" />
+        <ValidationMessage For="() => catedratico.Titulo" />
+    </div>
+    <div class="form-group">
+        <label for="Colegiado">Ingrese Colegiado:</label>
+        <InputText id="Colegiado" @bind-Value="catedratico.Colegiado" class="form-control" />
+        <ValidationMessage For="() => catedratico.Colegiado" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+</EditForm>
+@if (catedraticos != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha Nacimiento</th>
+                <th>Título</th>
+                <th>Colegiado</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var catedratico in catedraticos)
+            {
+                <tr>
+                    <td>@catedratico.Nombre</td>
+                    <td>@catedratico.Apellido</td>
+                    <td>@catedratico.FechaNac</td>
+                    <td>@catedratico.Titulo</td>
+                    <td>@catedratico.Colegiado</td>
+                    <td>
+                        <button class="btn btn-warning" 
+                         @onclick="@(() =>NavigationManager.NavigateTo($"/catedratico-editar/{catedratico.Colegiado}"))">
+                        Editar
+                        </button>
+                    </td>
+                    <td><button  class="btn btn-danger"@onclick="@(()=>Borrar(catedratico.Colegiado))">Submit</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+    private Catedratico catedratico = new Catedratico();
+    List<Catedratico> catedraticos = new List<Catedratico>();
+    protected async Task Guardar()
+    {
+        catedraticos.Add(catedratico);
+
+        await localStorage.SetItemAsync("catedraticos", catedraticos);
+
+    }
+    protected override async Task OnInitializedAsync()
+    {   //La primera vez que se corre poner en comentarios, pues como no existen datos
+        //convierta la lista catedraticos en null
+        catedraticos = await localStorage.GetItemAsync<List<Catedratico>>("catedraticos");
+    }
+
+    protected async Task Borrar(string Colegiado)
+    {
+        Catedratico catedraticoBorrar = catedraticos.Find(c=> c.Colegiado==Colegiado);
+        catedraticos.Remove(catedraticoBorrar);
+        await localStorage.SetItemAsync("catedraticos", catedraticos);
+    }
+
+}
