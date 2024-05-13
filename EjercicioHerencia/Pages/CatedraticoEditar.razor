@@ -7,36 +7,42 @@
 <EditForm Model="@catedratico" OnValidSubmit="@Guardar">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <div class="form-group">
-        <label for="Nombre">Ingrese Nombre:</label>
-        <InputText id="Nombre" @bind-Value="catedratico.Nombre" class="form-control" />
-        <ValidationMessage For="() => catedratico.Nombre" />
+    <div class="row">
+        <div class="col">
+            <label for="Nombre">Ingrese Nombre:</label>
+            <InputText id="Nombre" @bind-Value="catedratico.Nombre" class="form-control" />
+            <ValidationMessage For="() => catedratico.Nombre" />
+        </div>
+        <div class="col">
+            <label for="Apellido">Ingrese Apellido:</label>
+            <InputText id="Apellido" @bind-Value="catedratico.Apellido" class="form-control" />
+            <ValidationMessage For="() => catedratico.Apellido" />
+        </div>
     </div>
-    <div class="form-group">
-        <label for="Apellido">Ingrese Apellido:</label>
-        <InputText id="Apellido" @bind-Value="catedratico.Apellido" class="form-control" />
-        <ValidationMessage For="() => catedratico.Apellido" />
-    </div>
+    
     <div class="form-group">
         <label for="Direccion">Ingrese Direccion:</label>
         <InputText id="Direccion" @bind-Value="catedratico.Direccion" class="form-control" />
         <ValidationMessage For="() => catedratico.Direccion" />
     </div>
-    <div class="form-group">
-        <label for="FechaNac">Ingrese Fecha:</label>
-        <InputDate id="FechaNac" @bind-Value="catedratico.FechaNac" class="form-control" />
-        <ValidationMessage For="() => catedratico.FechaNac" />
+    <div class=" row">
+        <div class="col-2">
+            <label for="FechaNac">Ingrese Fecha:</label>
+            <InputDate id="FechaNac" @bind-Value="catedratico.FechaNac" class="form-control" />
+            <ValidationMessage For="() => catedratico.FechaNac" />
+        </div>
+        <div class="col-8">
+            <label for="Titulo">Ingrese Titulo:</label>
+            <InputText id="Titulo" @bind-Value="catedratico.Titulo" class="form-control" />
+            <ValidationMessage For="() => catedratico.Titulo" />
+        </div>
+        <div class="col-2">
+            <label for="Colegiado">Ingrese Colegiado:</label>
+            <InputText id="Colegiado" @bind-Value="catedratico.Colegiado" class="form-control" />
+            <ValidationMessage For="() => catedratico.Colegiado" />
+        </div>
     </div>
-    <div class="form-group">
-        <label for="Titulo">Ingrese Titulo:</label>
-        <InputText id="Titulo" @bind-Value="catedratico.Titulo" class="form-control" />
-        <ValidationMessage For="() => catedratico.Titulo" />
-    </div>
-    <div class="form-group">
-        <label for="Colegiado">Ingrese Colegiado:</label>
-        <InputText id="Colegiado" @bind-Value="catedratico.Colegiado" class="form-control" />
-        <ValidationMessage For="() => catedratico.Colegiado" />
-    </div>
+    
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
     </div>
